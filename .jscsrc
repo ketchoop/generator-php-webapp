@@ -1,0 +1,7 @@
+{
+  "preset": "airbnb",
+  "safeContextKeyword": ["self"],
+  "disallowMultipleVarDecl": true,
+  "requireTrailingComma": null,
+  "maxErrors": 20
+}

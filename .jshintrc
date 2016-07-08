@@ -1,0 +1,22 @@
+{
+  "maxerr": 15,
+  
+  "strict": false,
+
+  "esversion": 6,
+  
+  "undef": true,
+  "unused": true,
+  "nonew": true,
+  "notypeof": false,
+  "shadow": false,
+  "boss": false,
+  "eqnull": false,
+  "sub": false,
+  "validthis": false,
+  "withstmt": false,
+  
+  "browser": true,
+  "browserify": true,
+  "mocha": true
+}
