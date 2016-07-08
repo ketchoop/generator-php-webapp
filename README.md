@@ -1,2 +1,3 @@
-# generator-php-webapp
+# php-webapp-generator
+
 Yeoman generator for php projects
