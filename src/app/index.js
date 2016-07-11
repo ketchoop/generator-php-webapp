@@ -123,6 +123,9 @@ export default class PhpGenerator extends Base {
             deployPath: this.answers.deployPath
           });
         }
+      },
+      codeChecking() {
+        this.template('phpcs.xml');
       }
     };
   }
@@ -137,3 +140,4 @@ export default class PhpGenerator extends Base {
     this.spawnCommand('composer', ['install']);//TODO needs more gold(arguments)
   }
 }
+
