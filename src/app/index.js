@@ -36,13 +36,13 @@ export default class PhpGenerator extends Base {
       },
       {
         type: 'confirm',
-        name: 'doConfigureDeploy',
-        message: 'Set production server deployer settings?',
+        name: 'doUseDeployer',
+        message: 'Do you want to use deployer?',
         default: false
       },
       {
         when(answer) {
-          return answer.doConfigureDeploy;
+          return answer.doUseDeployer;
         },
         name: 'serverHost',
         message: 'Host',
@@ -50,7 +50,7 @@ export default class PhpGenerator extends Base {
       },
       {
         when(answer) {
-          return answer.doConfigureDeploy;
+          return answer.doUseDeployer;
         },
         name: 'serverPort',
         message: 'Server port',
@@ -58,7 +58,7 @@ export default class PhpGenerator extends Base {
       },
       {
         when(answer) {
-          return answer.doConfigureDeploy;
+          return answer.doUseDeployer;
         },
         name: 'serverUser',
         message: 'Username',
@@ -66,7 +66,7 @@ export default class PhpGenerator extends Base {
       },
       {
         when(answer) {
-          return answer.doConfigureDeploy;
+          return answer.doUseDeployer;
         },
         name: 'serverPass',
         message: 'Password',
@@ -74,7 +74,7 @@ export default class PhpGenerator extends Base {
       },
       {
         when(answer) {
-          return answer.doConfigureDeploy;
+          return answer.doUseDeployer;
         },
         name: 'deployPath',
         message: 'Deploy path',
@@ -92,7 +92,6 @@ export default class PhpGenerator extends Base {
       structure() {
         const folders = [
           'src/lib',
-          'docs',
           'web',
           'tests'
         ];
@@ -114,14 +113,16 @@ export default class PhpGenerator extends Base {
         this.template('phpunit.xml');
       },
       deployer() {
-        this.template('_deploy.php', 'deploy.php',{ repo: this.answers.repo });
-        this.template('_servers.yml', 'servers.yml', {
-          serverHost: this.answers.serverHost,
-          serverPort: this.answers.serverPort,
-          serverUser: this.answers.serverUser,
-          serverPass: this.answers.serverPass,
-          deployPath: this.answers.deployPath
-        });
+        if (this.answers.doUseDeployer) {
+          this.template('_deploy.php', 'deploy.php', {repo: this.answers.repo});
+          this.template('_servers.yml', 'servers.yml', {
+            serverHost: this.answers.serverHost,
+            serverPort: this.answers.serverPort,
+            serverUser: this.answers.serverUser,
+            serverPass: this.answers.serverPass,
+            deployPath: this.answers.deployPath
+          });
+        }
       }
     };
   }
