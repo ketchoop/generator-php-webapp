@@ -1,6 +1,6 @@
 {
   "name": "generator-php-webapp",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Yeoman generator for php projects",
   "author": {
     "name": "Alexey Boyko",
@@ -46,6 +46,7 @@
   "homepage": "https://github.com/ket4yii/generator-php-webapp#readme",
   "scripts": {
     "check": "jshint app && jscs app",
-    "babel": "babel src -d ./"
+    "babel": "babel src -d ./",
+    "build": "npm run babel && cp -r src/templates app"
   }
 }

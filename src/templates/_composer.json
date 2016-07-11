@@ -1,0 +1,11 @@
+{
+  "name": "<%= appname %>",
+  "description": "",
+  "minimum-stability": "stable",
+  "license": "",
+  "authors": [],
+  "autoload": {
+  },
+  "require-dev": {
+  }
+}

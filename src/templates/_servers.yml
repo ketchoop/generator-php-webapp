@@ -1,0 +1,8 @@
+production:
+    host: <%= serverHost %>
+    port: <%= serverPort %>
+    user: <%= serverUser %>
+    password: <%= serverPass %>
+    stage: production
+    deploy_path: <%= deployPath %>
+    branch: master
