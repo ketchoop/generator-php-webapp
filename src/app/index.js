@@ -13,7 +13,7 @@ export default class PhpGenerator extends Base {
   prompting () {
     // Have Yeoman greet the user.
     console.log(yosay(
-      'Welcome to the grand ' + chalk.red('WebApp-PHP') + ' generator!'
+      'Welcome to the grand ' + chalk.red('PHP webapp') + ' generator!'
     ));
 
     console.log(chalk.bold.yellow(`Let's create your awesome ${chalk.underline.bold.red(this.appname)} project!\n`));
