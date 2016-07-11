@@ -68,6 +68,7 @@ export default class PhpGenerator extends Base {
         when(answer) {
           return answer.doUseDeployer;
         },
+        type: "password",
         name: 'serverPass',
         message: 'Password',
         default: 'pass'
