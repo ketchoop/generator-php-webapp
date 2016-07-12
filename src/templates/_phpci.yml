@@ -1,0 +1,62 @@
+setup:
+  composer:
+    prefer_dist: true
+
+build_settings:
+    ignore:
+      - "vendor"
+      - "tests"
+
+test:
+    php_parallel_lint:
+        allow_failures: false
+    php_unit:
+        config:
+            - "phpunit.xml"
+        allow_failures: false
+    php_docblock_checker:
+        allowed_warnings: 5
+        skip_classes: false
+    php_mess_detector:
+        allow_failures: true
+        allowed_warnings: 5
+        rules:
+           - "cleancode"
+           - "controversial"
+           - "codesize"
+           - "unusedcode"
+           - "naming"
+           - "design"
+    php_code_sniffer:
+        path: src
+        allowed_warnings: 20
+        allowed_errors: 10
+        tab_width: 4
+        standard: "PSR2"
+        encoding: "utf8"
+        allow_failures: false
+    php_cpd:
+        allow_failures: false
+        standard: "PSR2"
+    php_loc:
+        directory: "src"
+        allow_failures: false
+
+success:
+    email:
+       default_mailto_address: <%= email %>
+    \ItHerz\PHPCI\Plugins\MavenPlugin:
+       goals: site site-deploy
+    <% if (deployer) { %>
+    \Ket4yii\PHPCI\Deployer\Plugin\Deployer:
+      <% deployer.forEach(function (server) { %>
+        <%= server.branch %>:
+          stage: <%= server.stage %>
+      <% }); %>
+    <% } %>
+
+failure:
+    email:
+       committer: true
+       default_mailto_address: <%= email %>
+

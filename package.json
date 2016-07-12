@@ -47,6 +47,6 @@
   "scripts": {
     "check": "jshint app && jscs app",
     "babel": "babel src -d ./",
-    "build": "npm run babel && cp -r src/templates app"
+    "build": "npm run babel && cp -rf src/templates app"
   }
 }
