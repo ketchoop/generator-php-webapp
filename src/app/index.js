@@ -184,6 +184,8 @@ export default class PhpGenerator extends Base {
               case 'ENOENT':
                 console.error('Couldn\'t find composer binary, please specify your path.');
                 break;
+              default:
+                console.error('Something went wrong with composer install. Code ', err.code);
             }
           });
       },
@@ -202,6 +204,8 @@ export default class PhpGenerator extends Base {
               case 'ENOENT':
                 console.error('Couldn\'t find git binary, please specify your path.');
                 break;
+              default:
+                console.error('Something went wrong with git init. Code ', err.code);
             }
           });
       }
