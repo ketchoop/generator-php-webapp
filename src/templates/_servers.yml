@@ -1,8 +1,10 @@
-production:
-    host: <%= serverHost %>
-    port: <%= serverPort %>
-    user: <%= serverUser %>
-    password: <%= serverPass %>
-    stage: production
-    deploy_path: <%= deployPath %>
-    branch: master
+<% deployer.forEach(function (server) { %>
+<%= server.name %>:
+    host: <%= server.host %>
+    port: <%= server.port %>
+    user: <%= server.user %>
+    password: <%= server.pass %>
+    stage: <%= server.stage %>
+    deploy_path: <%= server.deployPath %>
+    branch: <%= server.branch %>
+<% }); %>

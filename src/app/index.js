@@ -36,57 +36,86 @@ export default class PhpGenerator extends Base {
       },
       {
         type: 'confirm',
-        name: 'doUseDeployer',
-        message: 'Do you want to use deployer?',
+        name: 'doUseCi',
+        message: 'Do you want to create PHPCI configuration?',
         default: false
       },
       {
-        when(answer) {
-          return answer.doUseDeployer;
-        },
-        name: 'serverHost',
+        type: 'confirm',
+        name: 'doUseDeployer',
+        message: 'Do you want to use deployer?',
+        default: false
+      }
+    ];
+
+    const deployerPrompts = [
+      {
+        name: 'name',
+        message: 'Server name',
+        default: 'production'
+      },
+      {
+        name: 'host',
         message: 'Host',
         default: 0
       },
       {
-        when(answer) {
-          return answer.doUseDeployer;
-        },
-        name: 'serverPort',
+        name: 'port',
         message: 'Server port',
         default: 0
       },
       {
-        when(answer) {
-          return answer.doUseDeployer;
-        },
-        name: 'serverUser',
+        name: 'user',
         message: 'Username',
         default: 'user'
       },
       {
-        when(answer) {
-          return answer.doUseDeployer;
-        },
         type: "password",
-        name: 'serverPass',
+        name: 'pass',
         message: 'Password',
         default: 'pass'
       },
       {
-        when(answer) {
-          return answer.doUseDeployer;
-        },
+        name: 'stage',
+        message: 'stage',
+        default: 'production'
+      },
+      {
         name: 'deployPath',
         message: 'Deploy path',
         default: '/var/www/html'
+      },
+      {
+        name: 'branch',
+        message: 'Branch',
+        default: 'master'
+      },
+      {
+        type: 'confirm',
+        name: 'doSpecifyAnotherServer',
+        message: 'Do specify another server?',
+        default: false
       }
     ];
 
-    return this.prompt(prompts).then(function (answers) {
-      // To access props later use this.props.someAnswer;
+    return this.prompt(prompts).then(answers  => {
       this.answers = answers;
-    }.bind(this));
+
+      if (answers.doUseDeployer) {
+        this.answers.deployer = [];
+
+        const promptLoop = () =>
+        this.prompt(deployerPrompts).then(answers => {
+          this.answers.deployer.push(answers);
+
+          if (answers.doSpecifyAnotherServer) {
+            return promptLoop();
+          }
+        });
+        
+        return promptLoop();
+      }
+    });
   }
   get writing () {
     return {
@@ -116,29 +145,42 @@ export default class PhpGenerator extends Base {
       deployer() {
         if (this.answers.doUseDeployer) {
           this.template('_deploy.php', 'deploy.php', {repo: this.answers.repo});
-          this.template('_servers.yml', 'servers.yml', {
-            serverHost: this.answers.serverHost,
-            serverPort: this.answers.serverPort,
-            serverUser: this.answers.serverUser,
-            serverPass: this.answers.serverPass,
-            deployPath: this.answers.deployPath
-          });
+          this.template('_servers.yml', 'servers.yml', { deployer: this.answers.deployer });
         }
       },
       codeChecking() {
         this.template('phpcs.xml');
+      },
+      ci() {
+        if (this.answers.doUseCi) {
+          this.template('_phpci.yml', 'phpci.yml', {
+            email: this.answers.email,
+            deployer: this.answers.deployer
+          });
+        }
+      },
+      other() {
+        this.template('gitignore', '.gitignore');
       }
     };
   }
 
-  gitInit() {
-    console.log(`Initializing git repo ${this.answers.repo}`);
-    this.spawnCommand('git', ['init']);
-    this.spawnCommand('git', ['remote', 'add', 'origin', this.answers.repo]);
-  }
+  get install () {
+    return {
 
-  install () {
-    this.spawnCommand('composer', ['install']);//TODO needs more gold(arguments)
+      composer() {
+        this.spawnCommand('composer', ['install']);//TODO needs more gold(arguments)
+      },
+
+      gitInit() {
+        const branches = ['staging', 'dev'];
+
+        console.log(`Initializing git repo ${this.answers.repo}`);
+        this.spawnCommand('git', ['init']);
+        this.spawnCommand('git', ['remote', 'add', 'origin', this.answers.repo]);
+
+      }
+    };
   }
 }
 

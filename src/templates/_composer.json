@@ -8,10 +8,12 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^5.4.6",
-    "squizlabs/php_codesniffer": "^2.6"
+    "squizlabs/php_codesniffer": "^2.6",
+    "deployer/deployer": "^3.3.0"
   },
   "scripts": {
     "test": "phpunit",
-    "check": "phpcs --extensions=php,inc,lib"
+    "check": "phpcs --extensions=php,inc,lib",
+    "deploy": "dep deploy"
   }
 }
