@@ -169,14 +169,6 @@ export default class PhpGenerator extends Base {
         this.spawnCommand('git', ['init']);
         this.spawnCommand('git', ['remote', 'add', 'origin', this.answers.repo]);
 
-        //Init commit
-        this.spawnCommand('git', ['add', '.']);
-        this.spawnCommand('git', ['commit', '-m', 'Init commit']);
-
-        //Create branches
-        branches.forEach(branch => {
-          this.spawnCommand('git', ['branch', branch]);
-        })
       }
     };
   }
