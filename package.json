@@ -45,7 +45,7 @@
   },
   "homepage": "https://github.com/ket4yii/generator-php-webapp#readme",
   "scripts": {
-    "check": "jshint app && jscs app",
+    "check": "jshint src/app && jscs src/app",
     "babel": "babel src -d ./",
     "build": "npm run babel && cp -rf src/templates app"
   }

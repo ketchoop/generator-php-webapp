@@ -104,14 +104,14 @@ export default class PhpGenerator extends Base {
       if (answers.doUseDeployer) {
         this.answers.deployer = [];
 
-        const promptLoop = () =>
-        this.prompt(deployerPrompts).then(answers => {
-          this.answers.deployer.push(answers);
+        const promptLoop = () => this.prompt(deployerPrompts)
+          .then(answers => {
+            this.answers.deployer.push(answers);
 
-          if (answers.doSpecifyAnotherServer) {
-            return promptLoop();
-          }
-        });
+            if (answers.doSpecifyAnotherServer) {
+              return promptLoop();
+            }
+          });
         
         return promptLoop();
       }
@@ -172,13 +172,12 @@ export default class PhpGenerator extends Base {
         this.spawnCommand('composer', ['install']);//TODO needs more gold(arguments)
       },
 
-      gitInit() {
+      git() {
         const branches = ['staging', 'dev'];
 
         console.log(`Initializing git repo ${this.answers.repo}`);
         this.spawnCommand('git', ['init']);
         this.spawnCommand('git', ['remote', 'add', 'origin', this.answers.repo]);
-
       }
     };
   }

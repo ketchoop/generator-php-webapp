@@ -14,12 +14,14 @@ Yeoman generator for php projects
 ##Templates
 
 * Deployer (**optional**)
-* PHPCS
 * Composer
+* PHPCI
+* PHPCS
 * PHPUnit
+* gitignore
 
 ## Other
 
-* Composer check and test scripts
+* Composer check, test and deploy scripts
 * Installation of some dependencies
 * Git init of project
