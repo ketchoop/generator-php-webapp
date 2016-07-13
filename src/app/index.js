@@ -53,7 +53,7 @@ export default class PhpGenerator extends Base {
     const deployerPrompts = [
       {
         name: 'name',
-        message: 'Server name',
+        message: 'Server alias(only for deployer)',
         default: 'production'
       },
       {
