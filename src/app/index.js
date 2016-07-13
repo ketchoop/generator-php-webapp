@@ -36,6 +36,12 @@ export default class PhpGenerator extends Base {
       },
       {
         type: 'confirm',
+        name: 'doUseCi',
+        message: 'Do you want to create PHPCI configuration?',
+        default: false
+      },
+      {
+        type: 'confirm',
         name: 'doUseDeployer',
         message: 'Do you want to use deployer?',
         default: false
@@ -144,10 +150,14 @@ export default class PhpGenerator extends Base {
       },
       codeChecking() {
         this.template('phpcs.xml');
-        this.template('_phpci.yml', 'phpci.yml', {
-          email: this.answers.email,
-          deployer: this.answers.deployer
-        });
+      },
+      ci() {
+        if (this.answers.doUseCi) {
+          this.template('_phpci.yml', 'phpci.yml', {
+            email: this.answers.email,
+            deployer: this.answers.deployer
+          });
+        }
       },
       other() {
         this.template('gitignore', '.gitignore');
