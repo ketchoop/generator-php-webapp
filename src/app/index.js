@@ -45,7 +45,7 @@ export default class PhpGenerator extends Base {
       {
         type: 'confirm',
         name: 'doUseDeployer',
-        message: 'Do you want to use deployer?',
+        message: 'Do you want to create deployer configuration?',
         default: false
       }
     ];
