@@ -1,11 +1,10 @@
 import { Base } from 'yeoman-generator';
-import path from 'path';
 import chalk from 'chalk';
 import yosay from 'yosay';
 import mkdirp from 'mkdirp';
 
 export default class PhpGenerator extends Base {
-  constructor( ...args ) {
+  constructor(...args) {
     super(...args);
     this.argument('appname', { required: false, default: this.appname });
   }
@@ -16,7 +15,10 @@ export default class PhpGenerator extends Base {
       'Welcome to the grand ' + chalk.red('PHP webapp') + ' generator!'
     ));
 
-    console.log(chalk.bold.yellow(`Let's create your awesome ${chalk.underline.bold.red(this.appname)} project!\n`));
+    console.log(
+      chalk.bold.yellow(`Let's create your awesome 
+        ${chalk.underline.bold.red(this.appname)} project!\n`)
+    );
 
     var prompts = [
       {
@@ -70,7 +72,7 @@ export default class PhpGenerator extends Base {
         default: 'user'
       },
       {
-        type: "password",
+        type: 'password',
         name: 'pass',
         message: 'Password',
         default: 'pass'
@@ -112,11 +114,12 @@ export default class PhpGenerator extends Base {
               return promptLoop();
             }
           });
-        
+
         return promptLoop();
       }
     });
   }
+
   get writing () {
     return {
       structure() {
@@ -128,6 +131,7 @@ export default class PhpGenerator extends Base {
 
         folders.forEach(folder => mkdirp(folder));
       },
+
       composerJson() {
         this.template(
           '_composer.json',
@@ -137,20 +141,24 @@ export default class PhpGenerator extends Base {
             author: this.answers.author,
             email: this.answers.email
           }
-        )
+        );
       },
+
       phpunit() {
         this.template('phpunit.xml');
       },
+
       deployer() {
         if (this.answers.doUseDeployer) {
-          this.template('_deploy.php', 'deploy.php', {repo: this.answers.repo});
+          this.template('_deploy.php', 'deploy.php', { repo: this.answers.repo });
           this.template('_servers.yml', 'servers.yml', { deployer: this.answers.deployer });
         }
       },
+
       codeChecking() {
         this.template('phpcs.xml');
       },
+
       ci() {
         if (this.answers.doUseCi) {
           this.template('_phpci.yml', 'phpci.yml', {
@@ -159,6 +167,7 @@ export default class PhpGenerator extends Base {
           });
         }
       },
+
       other() {
         this.template('gitignore', '.gitignore');
       }
@@ -173,8 +182,6 @@ export default class PhpGenerator extends Base {
       },
 
       git() {
-        const branches = ['staging', 'dev'];
-
         console.log(`Initializing git repo ${this.answers.repo}`);
         this.spawnCommand('git', ['init']);
         this.spawnCommand('git', ['remote', 'add', 'origin', this.answers.repo]);
