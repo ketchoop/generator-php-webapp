@@ -182,7 +182,7 @@ export default class PhpGenerator extends Base {
           .on('error', err => {
             switch (err.code) {
               case 'ENOENT':
-                console.err('Couldn\'t find composer binary, please specify your path.');
+                console.error('Couldn\'t find composer binary, please specify your path.');
                 break;
             }
           });
@@ -200,7 +200,7 @@ export default class PhpGenerator extends Base {
           .on('error', err => {
             switch (err.code) {
               case 'ENOENT':
-                console.err('Couldn\'t find git binary, please specify your path.');
+                console.error('Couldn\'t find git binary, please specify your path.');
                 break;
             }
           });
