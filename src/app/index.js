@@ -63,8 +63,8 @@ export default class PhpGenerator extends Base {
       },
       {
         name: 'port',
-        message: 'Server port',
-        default: 0
+        message: 'Server ssh port',
+        default: 22
       },
       {
         name: 'user',
@@ -80,7 +80,9 @@ export default class PhpGenerator extends Base {
       {
         name: 'stage',
         message: 'stage',
-        default: 'production'
+        default(answers) {
+          return answers.name;
+        }
       },
       {
         name: 'deployPath',
