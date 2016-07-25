@@ -32,6 +32,30 @@ export default class PhpGenerator extends Base {
         default: ''
       },
       {
+        type: 'confirm',
+        name: 'specifyNs',
+        message: 'Do you want to specify basic autoload configuration' +
+        '(vendor namespace and project namespace) for composer?',
+        default: false
+      },
+      {
+        when(answers) {
+          return answers.specifyNs;
+        },
+
+        name: 'nsPrefix',
+        message: 'Composer base namespace(vendor namespace and project namespace) for src/lib',
+        filter(answer) {
+          return answer.replace('\\', '\\\\');
+        }
+      },
+      {
+        type: 'list',
+        name: 'nsStandard',
+        message: 'Choose autoload standard',
+        choices: ['psr4', 'psr0']
+      },
+      {
         name: 'repo',
         message: 'Repository',
         default: ''
@@ -141,7 +165,10 @@ export default class PhpGenerator extends Base {
           {
             appname: this.appname,
             author: this.answers.author,
-            email: this.answers.email
+            email: this.answers.email,
+            specifyNs: this.answers.specifyNs,
+            nsPrefix: this.answers.nsPrefix,
+            nsStandard: this.answers.nsStandard
           }
         );
       },

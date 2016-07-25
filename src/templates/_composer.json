@@ -4,8 +4,13 @@
   "minimum-stability": "stable",
   "license": "",
   "authors": [],
+  <% if (specifyNs) { %>
   "autoload": {
+    "<%= nsStandard %>": {
+      "<%= nsPrefix %>": "src/lib"
+    }
   },
+  <% } %>
   "require-dev": {
     "phpunit/phpunit": "^5.4.6",
     "squizlabs/php_codesniffer": "^2.6",
