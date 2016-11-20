@@ -20,16 +20,31 @@ export default class PhpGenerator extends Base {
         ${chalk.underline.bold.red(this.appname)} project!\n`)
     );
 
+    const gitInfoCommands= {
+      'repo': ['remote', 'get-url', 'origin'],
+      'name': ['config', 'user.name'],
+      'email': ['config', 'user.email']
+    };
+
+    let gitInfo = {};
+
+    for (let info in gitInfoCommands) {
+      const command = gitInfoCommands[info];
+      gitInfo[info] = this
+        .spawnCommandSync('git', command, { stdio: null })
+        .stdout;
+    }
+
     var prompts = [
       {
         name: 'author',
         message: 'Author',
-        default: ''
+        default: gitInfo.name
       },
       {
         name: 'email',
         message: 'Email',
-        default: ''
+        default: gitInfo.email
       },
       {
         type: 'confirm',
@@ -58,7 +73,7 @@ export default class PhpGenerator extends Base {
       {
         name: 'repo',
         message: 'Repository',
-        default: ''
+        default: gitInfo.repo
       },
       {
         type: 'confirm',
