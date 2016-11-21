@@ -235,21 +235,26 @@ export default class PhpGenerator extends Base {
       },
 
       git() {
-        console.log(`Initializing git repo ${this.answers.repo}`);
-
-        this.spawnCommand('git', ['init'])
+        this.spawnCommand('git', ['status'], { stdio: null })
           .on('close', code => {
-            if (!code) {
-              this.spawnCommand('git', ['remote', 'add', 'origin', this.answers.repo]);
-            }
-          })
-          .on('error', err => {
-            switch (err.code) {
-              case 'ENOENT':
-                console.error('Couldn\'t find git binary, please specify your path.');
-                break;
-              default:
-                console.error('Something went wrong with git init. Code ', err.code);
+            if (code != 0) {
+              console.log(`Initializing git repo ${this.answers.repo}`);
+
+              this.spawnCommand('git', ['init'])
+                .on('close', code => {
+                  if (!code) {
+                    this.spawnCommand('git', ['remote', 'add', 'origin', this.answers.repo]);
+                  }
+                })
+                .on('error', err => {
+                  switch (err.code) {
+                    case 'ENOENT':
+                      console.error('Couldn\'t find git binary, please specify your path.');
+                      break;
+                    default:
+                      console.error('Something went wrong with git init. Code ', err.code);
+                  }
+                });
             }
           });
       }
