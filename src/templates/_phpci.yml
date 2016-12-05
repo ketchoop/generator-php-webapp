@@ -45,8 +45,6 @@ test:
 success:
     email:
        default_mailto_address: <%= email %>
-    \ItHerz\PHPCI\Plugins\MavenPlugin:
-       goals: site site-deploy
     <% if (deployer) { %>
     \Ket4yii\PHPCI\Deployer\Plugin\Deployer:
       <% deployer.forEach(function (server) { %>
