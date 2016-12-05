@@ -65,6 +65,10 @@ export default class PhpGenerator extends Base {
         }
       },
       {
+        when(answers) {
+            return answers.specifyNs;
+        },
+
         type: 'list',
         name: 'nsStandard',
         message: 'Choose autoload standard',
